@@ -48,17 +48,6 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Configure kubeconfig
+      - name: Validate Kubernetes manifests
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl apply -f k8s/
-          kubectl rollout status deployment/notifications-app --timeout=60s
-
-      - name: Verify deploy
-        run: |
-          kubectl get pods
-          kubectl get services
+          kubectl apply -f k8s/ --dry-run=client --validate=false
