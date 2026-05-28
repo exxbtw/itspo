@@ -51,4 +51,3 @@ jobs:
       - name: Validate Kubernetes manifests
         run: |
           kubectl apply -f k8s/ --dry-run=client --validate=false
-EOF
