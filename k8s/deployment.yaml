@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notifications-app
+  labels:
+    app: notifications-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: notifications-app
+  template:
+    metadata:
+      labels:
+        app: notifications-app
+    spec:
+      containers:
+        - name: notifications-container
+          image: notifications-s11:latest
+          ports:
+            - containerPort: 8131
+            - containerPort: 50051
+          env:
+            - name: PORT
+              value: "8131"

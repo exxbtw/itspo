@@ -1,0 +1,29 @@
+services:
+  notifications-svc-s11:
+    build: ./notifications-svc
+    container_name: notifications-svc-s11
+    ports:
+      - "8131:8131"
+    expose:
+      - "8131"
+      - "50051"
+    depends_on:
+      - sender-svc
+
+  sender-svc:
+    build:
+      context: .
+      dockerfile: sender-svc/Dockerfile
+    container_name: sender-svc
+    expose:
+      - "50052"
+
+  gateway:
+    image: nginx:alpine
+    container_name: api-gateway-s11
+    volumes:
+      - ./infra/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8080:8080"
+    depends_on:
+      - notifications-svc-s11

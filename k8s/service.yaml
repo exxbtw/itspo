@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: notifications-svc-s11
+spec:
+  selector:
+    app: notifications-app
+  ports:
+    - name: http
+      port: 8131
+      targetPort: 8131
+    - name: grpc
+      port: 50051
+      targetPort: 50051

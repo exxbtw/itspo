@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package notifications.v1;
+
+service NotificationsService {
+  rpc CreateNotification (CreateNotificationRequest) returns (CreateNotificationResponse);
+  rpc ListNotifications (ListNotificationsRequest) returns (ListNotificationsResponse);
+}
+
+message CreateNotificationRequest {
+  string title   = 1;
+  string message = 2;
+  string channel = 3;
+}
+
+message CreateNotificationResponse {
+  int32  id      = 1;
+  string title   = 2;
+  string message = 3;
+  string channel = 4;
+}
+
+message ListNotificationsRequest {}
+
+message NotificationItem {
+  int32  id      = 1;
+  string title   = 2;
+  string message = 3;
+  string channel = 4;
+}
+
+message ListNotificationsResponse {
+  repeated NotificationItem notifications = 1;
+}
